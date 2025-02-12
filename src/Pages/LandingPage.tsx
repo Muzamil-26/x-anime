@@ -40,6 +40,7 @@ const LandingPage = () => {
             variant="outline"
             size="icon"
             className="text-xl w-fit px-10 h-14 font-[Ninja1] flex justify-center items-center"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             Enter HomePage <ChevronRight />
           </Button>
