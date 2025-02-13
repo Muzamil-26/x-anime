@@ -19,8 +19,8 @@ import SearchIcon from "../assets/Images/search.png";
 
 export function HomePage() {
   const [api, setApi] = useState<CarouselApi>();
-  const [current, setCurrent] = useState(0);
-  const [count, setCount] = useState(0);
+  const [, setCurrent] = useState(0);
+  const [, setCount] = useState(0);
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }));
 
   const [animeList, setAnimeList] = useState([] as any[]);

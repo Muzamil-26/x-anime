@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Play, Star } from "lucide-react";
+import {  Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useAllContext } from "@/context/AllContext";
 import axios from "axios";
@@ -19,7 +19,7 @@ import AnimeCard from "../components/AnimeCard";
   }
 
 const AnimeWatchPage: React.FC = () => {
-  const { animeData, episode, firstEpisode, setEpisodes, setAnimeData } =
+  const { animeData, episode, setEpisodes, setAnimeData } =
     useAllContext();
   const { epid } = useParams();
   const [searchParams] = useSearchParams();
@@ -29,7 +29,7 @@ const AnimeWatchPage: React.FC = () => {
     { file: string; kind: string; label: string; srclang: string }[]
   >([]);
   const [server, setServer] = useState<Server|null>(null);
-  const [loading, setLoading] = useState(true); // New state for loading
+  const [, setLoading] = useState(true);
   const [recommendedAnimes, setrecommendedAnimes] = useState<any[]>([]);
   const location = useLocation();
 
