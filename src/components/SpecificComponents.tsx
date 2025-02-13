@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaPlay, FaPlus } from "react-icons/fa";
+import { FaPlay } from "react-icons/fa";
 import ShareGif from "../assets/Images/icegif-367.gif";
 import { MdShare } from "react-icons/md";
 import { NavLink } from "react-router-dom";

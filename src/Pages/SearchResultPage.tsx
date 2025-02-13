@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button"; // Assuming you're using a UI library
 import { Skeleton } from "@/components/ui/skeleton"; // Optional: For loading effect
