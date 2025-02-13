@@ -1,49 +1,60 @@
 import React, { useEffect, useRef, useState } from "react";
+import "video.js/dist/video-js.css";
 
 interface VideoPlayerProps {
-    src: string; // HLS Video URL
-    //   poster?: string; // Poster Image URL
-    captions?: { file: string; kind: string; label: string; srclang: string }[]; // Subtitle Tracks
+    src: string;
+    captions?: { file: string; kind: string; label: string; srclang: string }[];
 }
 
 const VideoPlayer2: React.FC<VideoPlayerProps> = ({ src, captions }) => {
     const videoRef = useRef<HTMLVideoElement | null>(null);
     const playerRef = useRef<any>(null);
     const [error, setError] = useState<string | null>(null);
-    const [mounted, setMounted] = useState(false);
+    const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
-        setMounted(true); // Ensure component is fully mounted before initializing
+        setIsMounted(true); // Ensure component is mounted before initializing Video.js
     }, []);
 
     useEffect(() => {
-        if (!mounted || !videoRef.current || playerRef.current || !src) return; // Prevent multiple initializations
+        if (!isMounted || !videoRef.current || !src) return;
+
+        // Dispose existing player before creating a new one
+        if (playerRef.current) {
+            playerRef.current.dispose();
+            playerRef.current = null;
+        }
 
         try {
-            // Initialize Video.js
             const player = (window as any).videojs(videoRef.current, {
                 controls: true,
                 autoplay: false,
                 preload: "auto",
                 responsive: true,
-                fluid: false, // Prevent automatic resizing issues
+                fluid: true,
             });
 
             playerRef.current = player;
 
             player.ready(() => {
-                if (player.qualityLevels) {
-                    const qualityLevels = player.qualityLevels();
+                console.log("Video.js Player Ready");
+
+                // Handle Quality Levels
+                const qualityLevels = player.qualityLevels();
+                if (qualityLevels) {
                     qualityLevels.on("addqualitylevel", (event: any) => {
-                        const qualityLevel = event.qualityLevel;
-                        console.log("Quality Added:", qualityLevel);
-                        qualityLevel.enabled = true;
+                        event.qualityLevel.enabled = true;
                     });
                 }
             });
+
+            player.on("error", () => {
+                console.error("Video.js Error");
+                setError("Failed to load the video.");
+            });
         } catch (err) {
             console.error("Error initializing Video.js:", err);
-            setError("Failed to load video player.");
+            setError("Failed to initialize video player.");
         }
 
         return () => {
@@ -52,14 +63,14 @@ const VideoPlayer2: React.FC<VideoPlayerProps> = ({ src, captions }) => {
                 playerRef.current = null;
             }
         };
-    }, [mounted, src]);
+    }, [isMounted, src]);
 
     if (error) {
-        return <p className="text-red-500">Error: {error}</p>; // Show error message
+        return <p className="text-red-500">Error: {error}</p>;
     }
 
-    if (!mounted || !src) {
-        return <p className="text-gray-500">Loading video...</p>; // Show loading message until component is ready
+    if (!isMounted || !src) {
+        return <p className="text-gray-500">Loading video...</p>;
     }
 
     return (
@@ -67,25 +78,21 @@ const VideoPlayer2: React.FC<VideoPlayerProps> = ({ src, captions }) => {
             <video
                 ref={videoRef}
                 className="video-js vjs-default-skin w-full h-full"
-                width={"100%"}
-                height={"100%"}
-            // poster={poster}
+                width="100%"
+                height="100%"
             >
                 <source src={src} type="application/x-mpegURL" />
-
-                {/* Dynamically Render Subtitle Tracks */}
                 {captions &&
                     captions.map((caption, index) => (
                         <track
                             key={index}
                             kind={caption.kind || "subtitles"}
-                            src={caption.file} // Ensure using correct key (src, not file)
+                            src={caption.file}
                             srcLang={caption.srclang}
                             label={caption.label}
                             default={caption.label === "English"}
                         />
                     ))}
-
             </video>
         </div>
     );

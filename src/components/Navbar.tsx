@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label"
 import { Button } from "./ui/button";
-import axios from 'axios';
+// import axios from 'axios';
 // import { SearchIcon } from "lucide-react";
 
 
@@ -33,10 +33,10 @@ const Navbar = () => {
     settoggle(!toggle);
   };
 
-  const api = axios.create({
-    baseURL: "https://muzamilapi2.vercel.app",
-    headers: { "Content-Type": "application/json" },
-  });
+  // const api = axios.create({
+  //   baseURL: "https://muzamilapi2.vercel.app",
+  //   headers: { "Content-Type": "application/json" },
+  // });
 
   const SearchValue1=SearchValue.trim().split(" ").join("+");
 
@@ -88,12 +88,14 @@ const Navbar = () => {
             />
           </div>
           <NavLink to={`/search?keyword=${SearchValue1}`}>
+          <DialogClose asChild>
           <Button type="submit" className="bg-white px-3 hover:bg-gray-200" size="sm" >
             <span className="sr-only">Search</span>
            
-            <img src={searchIcon} alt="Search" className="w-5 hidden md:flex"/>
+            <img src={searchIcon} alt="Search" className="w-5 md:flex"/>
          
           </Button>
+          </DialogClose>
           </NavLink>
         </div>
         <DialogFooter className="sm:justify-start">

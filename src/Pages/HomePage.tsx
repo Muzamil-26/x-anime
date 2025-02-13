@@ -2,8 +2,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
   type CarouselApi
 } from "@/components/ui/carousel";
 import { useEffect, useState, useRef, useCallback } from "react";
@@ -14,6 +12,8 @@ import AnimeCard from "@/components/AnimeCard";
 import TopAiring from "@/components/HomeLatestAnimePage";
 import Top10Animes from '../components/topanime10'
 import Genres from "@/components/genreComponent";
+import { NavLink } from "react-router-dom";
+import SearchIcon from "../assets/Images/search.png";
 
 
 
@@ -35,6 +35,7 @@ export function HomePage() {
   const [top10, settop10] = useState([] as any[]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [SearchValue,setSearchVlaue]=useState('');
 
   // Fetch Anime List
   const fetchAnimeList = useCallback(async () => {
@@ -86,7 +87,7 @@ export function HomePage() {
   : top10;
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center" >
 
       {loading ? (
         <p className="text-gray-500 py-10">Loading anime...</p>
@@ -108,8 +109,26 @@ export function HomePage() {
             ))}
           </CarouselContent>
           <div className="absolute bottom-[75px] sm:bottom-[-23px] w-full flex justify-center items-center">
-            <Input className="w-[70%] lg:w-[50%] h-12 bg-white z-20" />
-          </div>
+  <div className="relative w-[70%] lg:w-[50%]">
+    <Input
+      className="w-full h-12 bg-white px-4 rounded-lg shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      placeholder="Search..."
+      onChange={(e) => setSearchVlaue(e.target.value)}
+    />
+    <NavLink
+      to={`/search?keyword=${SearchValue}`}
+      className="absolute right-2 top-1/2 transform -translate-y-1/2"
+    >
+      <img
+        src={SearchIcon}
+        alt="Search"
+        className="w-10 h-10 p-2 rounded-sm transition-all duration-300"
+      />
+    </NavLink>
+  </div>
+</div>
+
+          
         </Carousel>
 
       ) : (

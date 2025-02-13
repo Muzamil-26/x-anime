@@ -33,7 +33,7 @@ console.log(top10Animes)
   const [selectedPeriod, setSelectedPeriod] = useState<"day" | "week" | "month">("day");
 
   return (
-    <div className="bg-[#1a1a1a] p-4 rounded-lg shadow-md w-full">
+    <div className="bg-[#1a1a1a] p-4 rounded-lg shadow-md w-full" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
       {/* Title */}
       <h2 className="text-white text-lg font-bold font-[BruteFont] mb-4">Top 10</h2>
 
