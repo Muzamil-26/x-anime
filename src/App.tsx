@@ -8,6 +8,7 @@ import SpecificAnimePage from "./Pages/SpecificAnimePage";
 import AnimeWatchPage from './Pages/VidePage';
 import AllContextProvider from "./context/AllContext";
 import SearchResultPage from "./Pages/SearchResultPage";
+import Layout from './components/ShareScriptPage';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
       
       <BrowserRouter>
+      <Layout>
       <Navbar />
       <hr className="w-full"/>
         <Routes>
@@ -35,6 +37,7 @@ function App() {
         <Route path="/search" element={<SearchResultPage />} />
         </Routes>
         <Footer/>
+        </Layout>
       </BrowserRouter>
     
       </div>

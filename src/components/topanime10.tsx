@@ -33,7 +33,7 @@ console.log(top10Animes)
   const [selectedPeriod, setSelectedPeriod] = useState<"day" | "week" | "month">("day");
 
   return (
-    <div className="bg-[#1a1a1a] p-4 rounded-lg shadow-md w-full" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+    <div className="bg-[#1a1a1a] p-4 rounded-lg shadow-md w-full">
       {/* Title */}
       <h2 className="text-white text-lg font-bold font-[BruteFont] mb-4">Top 10</h2>
 
@@ -53,7 +53,7 @@ console.log(top10Animes)
       </div>
 
       {/* Horizontal Scrollable List */}
-      <div className="flex flex-col sm:flex-row gap-6 overflow-x-auto overflow-auto scrollbar-custom">
+      <div className="flex flex-col sm:flex-row gap-6 overflow-x-auto overflow-auto scrollbar-custom" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
         {top10Animes[selectedPeriod]?.length > 0 ? (
           top10Animes[selectedPeriod].map((anime, index) => (
             <div
@@ -82,12 +82,12 @@ console.log(top10Animes)
                 <div className="flex items-center text-xs text-gray-300 mt-1 gap-2">
                   {/* Subbed */}
                   <span className="flex items-center bg-green-500/20 text-green-400 px-2 py-1 rounded-md">
-                    <i className="fas fa-closed-captioning mr-1"></i> {anime.episodes.sub}
+                    <i className="fas fa-closed-captioning mr-1"></i> {anime.episodes.sub===null?"N/A":anime.episodes.sub}
                   </span>
 
                   {/* Dubbed */}
                   <span className="flex items-center bg-pink-500/20 text-pink-400 px-2 py-1 rounded-md">
-                    <i className="fas fa-microphone mr-1"></i> {anime.episodes.dub}
+                    <i className="fas fa-microphone mr-1"></i> {anime.episodes.dub===null?"N/A":anime.episodes.dub}
                   </span>
 
                   {/* Episodes */}
