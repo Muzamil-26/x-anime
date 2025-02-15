@@ -74,7 +74,7 @@ const VideoPlayer2: React.FC<VideoPlayerProps> = ({ src, captions }) => {
     }
 
     return (
-        <div className="video-container w-full h-full">
+        <div className="video-container w-full h-auto">
             <video
                 ref={videoRef}
                 className="video-js vjs-default-skin w-full h-full"

@@ -20,7 +20,7 @@ import '../css/LoaderForVideo.css';
 
 const fetchVideoData = async (epid: string, ep: string) => {
   const serverRes = await axios.get(
-    `${import.meta.env.VITE_BACKEND_URL}/aniwatch/episode-srcs?id=${epid}?ep=${ep}`
+    `${import.meta.env.VITE_BACKEND_URL}/aniwatch/servers?id=${epid}?ep=${ep}`
   );
   const videoRes = await axios.get(
     `${import.meta.env.VITE_BACKEND_URL}/aniwatch/episode-srcs?id=${epid}?ep=${ep}`
@@ -150,6 +150,7 @@ const AnimeWatchPage: React.FC = () => {
             <div className="sharethis-inline-share-buttons"></div>
           </div>
         </main>
+
 
         {/* Episodes List (Mobile Only) */}
         <ScrollArea className="block md:hidden h-[60vh] w-full p-4 border-t border-gray-700 order-2">
