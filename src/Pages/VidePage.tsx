@@ -11,7 +11,7 @@ import VideoPlayer2 from "@/components/ShalaPlayer2";
 import { MdShare } from "react-icons/md";
 import ShareGif from "../assets/Images/icegif-367.gif";
 import AnimeCard from "../components/AnimeCard";
-
+import '../css/LoaderForVideo.css';
 
 // interface Server {
 //   sub?: Array<{ serverId: number; serverName: string }>;
@@ -69,6 +69,8 @@ const AnimeWatchPage: React.FC = () => {
     // onSuccess: setAnimeData,
   });
 
+  // let isLoading=true
+
   return (
     <>
       <div className="flex flex-col md:flex-row min-h-screen rounded-3xl mt-5 bg-gray-900 text-white">
@@ -77,14 +79,17 @@ const AnimeWatchPage: React.FC = () => {
           <div className="p-4">
             <h2 className="text-lg font-semibold mb-2">List of episodes:</h2>
             {episodes?.map((ep: any, index: number) => (
-              <div key={index} className="w-full flex flex-col justify-center items-center cursor-pointer">
+              <div
+                key={index}
+                className={`w-full h-full flex flex-col justify-center items-center cursor-pointer`}
+              >
                 <NavLink
                   to={`/watch2/${ep.episodeId}`}
-                  className={`p-2 rounded w-full ${
-                    location.pathname.split("/")[2] + location.search === ep.episodeId
+                  className={`p-2 rounded cursor-pointer w-full ${location.pathname.split("/")[2] + location.search ===
+                      ep.episodeId
                       ? "bg-gray-500"
                       : "hover:bg-gray-800"
-                  }`}
+                    }`}
                 >
                   {index + 1}. {ep.name}
                 </NavLink>
@@ -98,7 +103,9 @@ const AnimeWatchPage: React.FC = () => {
         <main className="flex-1 p-4 order-1 md:order-2">
           <div className="relative bg-black aspect-video flex items-center justify-center">
             {isLoading ? (
-              <p className="text-white">Loading...</p>
+              <div className="flex justify-center items-center">
+                <span className="loader1"></span>
+              </div>
             ) : videoData?.videoURL ? (
               <VideoPlayer2 key={`${epid}-${ep}`} src={videoData.videoURL} captions={videoData.tracks} />
             ) : (
@@ -110,7 +117,7 @@ const AnimeWatchPage: React.FC = () => {
           <div className="mt-4 flex items-center justify-between text-sm">
             <span>
               SUB:
-              {videoData?.server?.sub?.map((item:any, index:any) => (
+              {videoData?.server?.sub?.map((item: any, index: any) => (
                 <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" key={index}>
                   {item.serverName.toUpperCase()}
                 </Button>
@@ -118,7 +125,7 @@ const AnimeWatchPage: React.FC = () => {
             </span>
             <span>
               DUB:
-              {videoData?.server?.dub?.map((item:any, index:any) => (
+              {videoData?.server?.dub?.map((item: any, index: any) => (
                 <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" key={index}>
                   {item.serverName.toUpperCase()}
                 </Button>
@@ -144,6 +151,31 @@ const AnimeWatchPage: React.FC = () => {
           </div>
         </main>
 
+        {/* Episodes List (Mobile Only) */}
+        <ScrollArea className="block md:hidden h-[60vh] w-full p-4 border-t border-gray-700 order-2">
+          <div className="p-4">
+            <h2 className="text-lg font-semibold mb-2">List of episodes:</h2>
+            {episodes?.map((ep: any, index: number) => (
+              <div
+                key={index}
+                className={`w-full h-full flex flex-col justify-center items-center cursor-pointer`}
+              >
+                <NavLink
+                  to={`/watch2/${ep.episodeId}`}
+                  className={`p-2 rounded cursor-pointer w-full ${location.pathname.split("/")[2] + location.search ===
+                      ep.episodeId
+                      ? "bg-gray-500"
+                      : "hover:bg-gray-800"
+                    }`}
+                >
+                  {index + 1}. {ep.name}
+                </NavLink>
+                <Separator className="my-2" />
+              </div>
+            ))}
+          </div>
+        </ScrollArea>
+
         {/* Right Sidebar (Anime Info) */}
         <aside className="w-full md:w-1/4 p-4 border-l border-gray-700 order-3">
           <img
@@ -163,8 +195,31 @@ const AnimeWatchPage: React.FC = () => {
             </span>
             <Star size={20} className="text-yellow-400" />
           </div>
+          <h3 className="mt-4 text-lg">What do you think?</h3>
+          <div className="flex gap-2 mt-2 flex-wrap">
+            <Button
+              variant="outline"
+              className="bg-black hover:bg-gray-800 hover:text-white"
+            >
+              Boring
+            </Button>
+            <Button
+              variant="outline"
+              className="bg-black hover:bg-gray-800 hover:text-white"
+            >
+              Great
+            </Button>
+            <Button
+              variant="outline"
+              className="bg-black hover:bg-gray-800 hover:text-white"
+            >
+              Amazing
+            </Button>
+          </div>
         </aside>
       </div>
+
+
 
       {/* Recommended Section */}
       <div className="my-24">

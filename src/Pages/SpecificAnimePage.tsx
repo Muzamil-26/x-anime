@@ -4,6 +4,8 @@ import { NavLink, useParams } from "react-router-dom";
 import AnimeCard from "../components/AnimeCard";
 import AnimeDetails from "@/components/SpecificComponents";
 import { useQuery } from "@tanstack/react-query";
+import '../css/Loader.css';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 const fetchAnimeDetails = async (id: string) => {
   const animeResponse = await axios.get(
@@ -45,6 +47,7 @@ const SpecificAnimePage = () => {
       {/* Episodes List */}
       <div className="my-10">
         <h2 className="text-2xl font-bold mb-3 text-[#A52010] font-[Brutefont]">Episodes</h2>
+        <ScrollArea className="w-full md:block h-[40vh] p-4 border-r">
         <div className="grid grid-cols-3 sm:grid-cols-12 gap-4">
           {data?.episodes.map((ep: any) => (
             <NavLink
@@ -57,6 +60,7 @@ const SpecificAnimePage = () => {
             </NavLink>
           ))}
         </div>
+        </ScrollArea>
       </div>
 
       {/* Recommended Animes */}

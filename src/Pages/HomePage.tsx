@@ -15,6 +15,7 @@ import Top10Animes from '../components/topanime10';
 import Genres from "@/components/genreComponent";
 import { NavLink } from "react-router-dom";
 import SearchIcon from "../assets/Images/search.png";
+import '../css/Loader.css';
 
 
 
@@ -38,7 +39,7 @@ export function HomePage() {
     return response.data;
   },staleTime: 1000 * 60 * 5,refetchOnMount:false});
 
-  // Destructure data
+
   const {
     spotLightAnimes: animeList = [],
     trendingAnimes: tendinganime = [],

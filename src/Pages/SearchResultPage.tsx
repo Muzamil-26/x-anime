@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import AnimeCard from "@/components/AnimeCard";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import '../css/Loader.css';
 
 const fetchSearchData = async (keyword: string) => {
     const formattedKeyword = keyword.trim().split(" ").join("+");

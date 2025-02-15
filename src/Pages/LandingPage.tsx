@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
+import '../css/Loader.css';
 // embla carosuel slider is downloaded use it
 
 const LandingPage = () => {
