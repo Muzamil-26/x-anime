@@ -41,7 +41,6 @@ const Navbar = () => {
 
   const SearchValue1=SearchValue.trim().split(" ").join("+");
 
-  console.log(SearchValue1);
 
   return (
     <>

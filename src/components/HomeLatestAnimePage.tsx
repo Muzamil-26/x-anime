@@ -19,8 +19,6 @@ const TopAiring: React.FC<MyComponentProps> = ({ lastestAnime, head }) => {
 
 
 
-    console.log(lastestAnime);
-
     return (
         <div className="p-6 bg-[#181a1b] rounded-lg">
             <h2 className="text-white text-2xl font-semibold mb-4">{head}</h2>

@@ -21,12 +21,7 @@ import '../css/Loader.css';
 
 export function HomePage() {
 
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
-
-  // Access cached data
-  const cachedData = queryClient.getQueryData(["animeData"]);
-  console.log("Cached Data:", cachedData);
 
   const [api, setApi] = useState<CarouselApi>();
   const [, setCurrent] = useState(0);

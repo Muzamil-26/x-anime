@@ -9,10 +9,12 @@ import AnimeWatchPage from './Pages/VidePage';
 import AllContextProvider from "./context/AllContext";
 import SearchResultPage from "./Pages/SearchResultPage";
 import Layout from './components/ShareScriptPage';
+import TopBanner from "./components/TopBanner";
 
 function App() {
   return (
     <>
+    <TopBanner/>
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
       
       <BrowserRouter>

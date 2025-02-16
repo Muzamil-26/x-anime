@@ -27,8 +27,6 @@ interface Top10AnimesProps {
 
 const Top10Animes: React.FC<Top10AnimesProps> = ({ top10Animes }) => {
 
-console.log(top10Animes)
-
 
   const [selectedPeriod, setSelectedPeriod] = useState<"day" | "week" | "month">("day");
 
