@@ -13,7 +13,7 @@ import AnimeCard from "@/components/AnimeCard";
 import TopAiring from "@/components/HomeLatestAnimePage";
 import Top10Animes from '../components/topanime10';
 import Genres from "@/components/genreComponent";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import SearchIcon from "../assets/Images/search.png";
 import '../css/Loader.css';
 
@@ -22,6 +22,7 @@ import '../css/Loader.css';
 export function HomePage() {
 
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   // Access cached data
   const cachedData = queryClient.getQueryData(["animeData"]);
@@ -55,7 +56,12 @@ export function HomePage() {
     genres = [],
   } = data || {};
 
-  console.log(data);
+
+  const SearchKeydown=(e:any)=>{
+    if(e.key=="Enter" && SearchValue!==""){
+      navigate(`/search?keyword=${SearchValue}`);
+    }
+  }
 
   // Carousel State Management
   useEffect(() => {
@@ -98,7 +104,7 @@ export function HomePage() {
                 ))}
               </CarouselContent>
               <div className="absolute bottom-[75px] sm:bottom-[-23px] w-full flex justify-center items-center">
-                <div className="relative w-[90%] md:w-[80%] lg:w-[50%]">
+                <div className="relative w-[90%] md:w-[80%] lg:w-[50%]" onKeyDown={(e)=>SearchKeydown(e)}>
                   <Input
                     className="w-full h-12 bg-white px-4 rounded-lg shadow-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Search..."

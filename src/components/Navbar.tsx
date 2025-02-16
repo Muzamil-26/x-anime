@@ -1,7 +1,7 @@
 import {useState } from "react";
 import logo from "../assets/Images/logo.png";
 import searchIcon from "../assets/Images/search.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import MenuIcon from "../assets/Images/menuicon.png";
 import backIcon from "../assets/Images/back.png";
 import { Input } from "@/components/ui/input";
@@ -27,16 +27,17 @@ const Navbar = () => {
   // const [Search,setSearch]=useState(false);
   const [SearchValue,setSearchVlaue]=useState('');
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const togglee = () => {
     settoggle(!toggle);
   };
 
-  // const api = axios.create({
-  //   baseURL: "https://muzamilapi2.vercel.app",
-  //   headers: { "Content-Type": "application/json" },
-  // });
+  const SearchKeydown=(e:any)=>{
+    if(e.key=="Enter" && SearchValue!==""){
+      navigate(`/search?keyword=${SearchValue}`);
+    }
+  }
 
   const SearchValue1=SearchValue.trim().split(" ").join("+");
 
@@ -51,7 +52,7 @@ const Navbar = () => {
 
      
 
-      <div className="flex items-center gap-2 cursor-pointer">
+      <div className="flex items-center gap-2 cursor-pointer" onKeyDown={(e)=>SearchKeydown(e)}>
       <Input type="search" className="lg:w-96 md:w-60 focus:border-gray-400 hidden md:flex" onChange={(e)=>{setSearchVlaue(e.target.value)}}/>
         <div className="relative inline-block group">
         
@@ -77,7 +78,7 @@ const Navbar = () => {
           Watch Anime Online, Free Anime Streaming Online on XAnime.to Anime Website
           </DialogDescription>
         </DialogHeader>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2" onKeyDown={(e)=>SearchKeydown(e)}>
           <div className="grid flex-1 gap-2">
             <Label htmlFor="link" className="sr-only">
               Link
