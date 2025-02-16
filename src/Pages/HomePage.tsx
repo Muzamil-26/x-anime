@@ -6,7 +6,7 @@ import {
 } from "@/components/ui/carousel";
 import { useEffect, useState, useRef } from "react";
 import Autoplay from "embla-carousel-autoplay";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Input } from "@/components/ui/input";
 import AnimeCard from "@/components/AnimeCard";
