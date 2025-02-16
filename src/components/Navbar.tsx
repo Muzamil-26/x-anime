@@ -55,7 +55,7 @@ const Navbar = () => {
       <Input type="search" className="lg:w-96 md:w-60 focus:border-gray-400 hidden md:flex" onChange={(e)=>{setSearchVlaue(e.target.value)}}/>
         <div className="relative inline-block group">
         
-          <NavLink to={`/search?keyword=${SearchValue1}`}>
+          <NavLink to={SearchValue===""?"":`/search?keyword=${SearchValue1}`}>
             <img src={searchIcon} alt="Search" className="w-5 hidden md:flex"/>
           </NavLink>
           <div className="absolute left-0 mt-2 w-20 p-2 text-center bg-black border lg:hidden border-gray-300 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
