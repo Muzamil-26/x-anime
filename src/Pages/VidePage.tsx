@@ -113,7 +113,7 @@ const AnimeWatchPage: React.FC = () => {
 
           {/* Server Buttons */}
           <div className="mt-4 flex items-center justify-between text-sm gap-3 flex-wrap">
-            <span className="flex items-center gap-1">
+            <span className="flex flex-wrap items-center gap-1">
               SUB:{"    "}
               <NavLink to={`/watch2/${videoData?.server.episodeId}&category=sub`}>
                 <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" >
@@ -136,7 +136,7 @@ const AnimeWatchPage: React.FC = () => {
                 // </NavLink>
               ))}
             </span>
-            <span className="flex items-center gap-1">
+            <span className="flex flex-wrap items-center gap-1">
               DUB:{"    "}
               <NavLink to={`/watch2/${videoData?.server.episodeId}&category=dub`}>
                 <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" >
