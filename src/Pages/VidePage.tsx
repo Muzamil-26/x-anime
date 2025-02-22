@@ -1,7 +1,6 @@
 import React from "react";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
-// import { useAllContext } from "@/context/AllContext";
 import axios from "axios";
 import { NavLink, useParams, useSearchParams, useLocation } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
@@ -12,18 +11,16 @@ import { MdShare } from "react-icons/md";
 import ShareGif from "../assets/Images/icegif-367.gif";
 import AnimeCard from "../components/AnimeCard";
 import '../css/LoaderForVideo.css';
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner"
 
-// interface Server {
-//   sub?: Array<{ serverId: number; serverName: string }>;
-//   dub?: Array<{ serverId: number; serverName: string }>;
-// }
 
-const fetchVideoData = async (epid: string, ep: string) => {
+const fetchVideoData = async (epid: string, ep: string, server: string, category: string) => {
   const serverRes = await axios.get(
     `${import.meta.env.VITE_BACKEND_URL}/aniwatch/servers?id=${epid}?ep=${ep}`
   );
   const videoRes = await axios.get(
-    `${import.meta.env.VITE_BACKEND_URL}/aniwatch/episode-srcs?id=${epid}?ep=${ep}`
+    `${import.meta.env.VITE_BACKEND_URL}/aniwatch/episode-srcs?id=${epid}?ep=${ep}&server=${server || ""}&category=${category || ""}`
   );
   return {
     server: serverRes.data,
@@ -43,15 +40,16 @@ const fetchAnimeData = async (epid: string) => {
 };
 
 const AnimeWatchPage: React.FC = () => {
-  // const { setEpisodes, setAnimeData } = useAllContext();
   const { epid } = useParams();
   const [searchParams] = useSearchParams();
   const ep = searchParams.get("ep");
+  const category = searchParams.get("category");
+  const server = searchParams.get("server");
   const location = useLocation();
 
   const { data: videoData, isLoading } = useQuery({
-    queryKey: ["videoData", epid, ep],
-    queryFn: () => fetchVideoData(epid as string, ep as string),
+    queryKey: ["videoData", epid, ep, server, category],
+    queryFn: () => fetchVideoData(epid as string, ep as string, server as string, category as string),
     enabled: !!epid && !!ep,
   });
 
@@ -59,23 +57,23 @@ const AnimeWatchPage: React.FC = () => {
     queryKey: ["episodes", epid],
     queryFn: () => fetchEpisodes(epid as string),
     enabled: !!epid,
-    // onSuccess: setEpisodes,
+
   });
 
   const { data: animeInfo } = useQuery({
     queryKey: ["animeData", epid],
     queryFn: () => fetchAnimeData(epid as string),
     enabled: !!epid,
-    // onSuccess: setAnimeData,
+
   });
 
-  // let isLoading=true
 
   return (
     <>
+    <Toaster/>
       <div className="flex flex-col md:flex-row min-h-screen rounded-3xl mt-5 bg-gray-900 text-white">
         {/* Left Sidebar (Episodes List) - Hidden on Mobile */}
-        <ScrollArea className="hidden md:block h-[60vh] w-full md:w-1/4 p-4 border-r border-gray-700">
+        <ScrollArea className="hidden md:block h-[60vh] w-full md:w-1/4 p-4 border-r border-gray-700" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           <div className="p-4">
             <h2 className="text-lg font-semibold mb-2">List of episodes:</h2>
             {episodes?.map((ep: any, index: number) => (
@@ -85,10 +83,10 @@ const AnimeWatchPage: React.FC = () => {
               >
                 <NavLink
                   to={`/watch2/${ep.episodeId}`}
-                  className={`p-2 rounded cursor-pointer w-full ${location.pathname.split("/")[2] + location.search ===
-                      ep.episodeId
-                      ? "bg-gray-500"
-                      : "hover:bg-gray-800"
+                  className={`p-2 rounded cursor-pointer w-full ${location.pathname.split("/")[2] + location.search.split("&")[0] ===
+                    ep.episodeId
+                    ? "bg-gray-500"
+                    : "hover:bg-gray-800"
                     }`}
                 >
                   {index + 1}. {ep.name}
@@ -107,28 +105,60 @@ const AnimeWatchPage: React.FC = () => {
                 <span className="loader1"></span>
               </div>
             ) : videoData?.videoURL ? (
-              <VideoPlayer2 key={`${epid}-${ep}`} src={videoData.videoURL} captions={videoData.tracks} />
+              <VideoPlayer2 key={`${epid}-${ep}-${server}-${category}`} src={videoData.videoURL} captions={videoData.tracks} />
             ) : (
               <p className="text-white">No video available</p>
             )}
           </div>
 
           {/* Server Buttons */}
-          <div className="mt-4 flex items-center justify-between text-sm">
-            <span>
-              SUB:
-              {videoData?.server?.sub?.map((item: any, index: any) => (
-                <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" key={index}>
-                  {item.serverName.toUpperCase()}
+          <div className="mt-4 flex items-center justify-between text-sm gap-3 flex-wrap">
+            <span className="flex items-center gap-1">
+              SUB:{"    "}
+              <NavLink to={`/watch2/${videoData?.server.episodeId}&category=sub`}>
+                <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" >
+                  Server 1
                 </Button>
+              </NavLink>
+              {videoData?.server?.sub?.map((item: any, index: any) => (
+                // <NavLink to={`/watch2/${videoData?.server.episodeId}&server=${item.serverName}&category=sub`} key={index}>
+                  <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" key={index}  onClick={() =>
+                    toast("This Server is Temporarily unavailable", {
+                      // description: "Sunday, December 03, 2023 at 9:00 AM",
+                      action: {
+                        label: "Undo",
+                        onClick: () => console.log("Undo"),
+                      },
+                    })
+                  }>
+                    {item.serverName.toUpperCase()}
+                  </Button>
+                // </NavLink>
               ))}
             </span>
-            <span>
-              DUB:
-              {videoData?.server?.dub?.map((item: any, index: any) => (
-                <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" key={index}>
-                  {item.serverName.toUpperCase()}
+            <span className="flex items-center gap-1">
+              DUB:{"    "}
+              <NavLink to={`/watch2/${videoData?.server.episodeId}&category=dub`}>
+                <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" >
+                  Server 1
                 </Button>
+              </NavLink>
+              {videoData?.server?.dub?.map((item: any, index: any) => (
+                // <NavLink to={`/watch2/${videoData?.server.episodeId}&server=${item.serverName}&category=dub`} key={index}>
+                  <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" key={index} 
+                  onClick={() =>
+                    toast("This Server is Temporarily unavailable", {
+                      // description: "Sunday, December 03, 2023 at 9:00 AM",
+                      action: {
+                        label: "Undo",
+                        onClick: () => console.log("Undo"),
+                      },
+                    })
+                  }
+                >
+                    {item.serverName.toUpperCase()}
+                  </Button>
+                // </NavLink>
               ))}
             </span>
           </div>
@@ -153,7 +183,7 @@ const AnimeWatchPage: React.FC = () => {
 
 
         {/* Episodes List (Mobile Only) */}
-        <ScrollArea className="block md:hidden h-[60vh] w-full p-4 border-t border-gray-700 order-2">
+        <ScrollArea className="block md:hidden h-[60vh] w-full p-4 border-t border-gray-700 order-2" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           <div className="p-4">
             <h2 className="text-lg font-semibold mb-2">List of episodes:</h2>
             {episodes?.map((ep: any, index: number) => (
@@ -164,9 +194,9 @@ const AnimeWatchPage: React.FC = () => {
                 <NavLink
                   to={`/watch2/${ep.episodeId}`}
                   className={`p-2 rounded cursor-pointer w-full ${location.pathname.split("/")[2] + location.search ===
-                      ep.episodeId
-                      ? "bg-gray-500"
-                      : "hover:bg-gray-800"
+                    ep.episodeId
+                    ? "bg-gray-500"
+                    : "hover:bg-gray-800"
                     }`}
                 >
                   {index + 1}. {ep.name}
@@ -223,7 +253,7 @@ const AnimeWatchPage: React.FC = () => {
 
 
       {/* Recommended Section */}
-      <div className="my-24">
+      <div className="my-24" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
         <h1 className="text-2xl text-[#A52010] mb-3 font-[Brutefont]">Recommend For You</h1>
         {animeInfo?.recommendedAnimes?.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">

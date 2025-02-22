@@ -41,17 +41,6 @@ const TopAiring: React.FC<MyComponentProps> = ({ lastestAnime, head }) => {
                                     <div className="hover:text-red-500">{anime?.name.length > 15 ? anime?.name.substring(0, 20) + "..." : anime?.name}</div>
                                 </h3>
                                 <div className="flex items-center text-xs text-gray-300 mt-1 space-x-2">
-                                    {/* Subbed Episodes */}
-                                    {/* <span className="flex items-center bg-green-500/20 text-green-400 px-2 py-1 rounded-md">
-        <i className="fas fa-closed-captioning mr-1"></i>1122
-      </span>
-
-      {/* Dubbed Episodes */}
-                                    {/* <span className="flex items-center bg-pink-500/20 text-pink-400 px-2 py-1 rounded-md"> */}
-                                    {/* <i className="fas fa-microphone mr-1"></i> 1108 */}
-                                    {/* </span> */}
-
-                                    {/* Type */}
                                     <span className="text-gray-400">• TV</span>
                                 </div>
                             </div>

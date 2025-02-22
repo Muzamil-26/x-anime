@@ -18,13 +18,11 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label"
 import { Button } from "./ui/button";
-// import axios from 'axios';
-// import { SearchIcon } from "lucide-react";
+
 
 
 const Navbar = () => {
   const [toggle, settoggle] = useState(false);
-  // const [Search,setSearch]=useState(false);
   const [SearchValue,setSearchVlaue]=useState('');
 
   const navigate = useNavigate();
@@ -35,6 +33,7 @@ const Navbar = () => {
 
   const SearchKeydown=(e:any)=>{
     if(e.key=="Enter" && SearchValue!==""){
+      
       navigate(`/search?keyword=${SearchValue}`);
     }
   }

@@ -82,9 +82,7 @@ const AnimeDetails = ({ specific, firstEpisode }: { specific: SpecificAnime; fir
                         <FaPlay /> Watch Now
                     </button>
                     </NavLink>
-                    {/* <button className="ml-4 mt-4 flex items-center gap-2 bg-gray-700 px-4 py-2 rounded-full">
-                        <FaPlus /> Add to List
-                    </button> */}
+
 
                     <p className="mt-4 text-gray-300">{specific?.info.description.length>50? specific?.info.description.substring(0, 600) + "..." : specific?.info.description}</p>
 

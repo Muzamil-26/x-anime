@@ -132,3 +132,14 @@ a.active hr{
 .scrollbar-custom::-webkit-scrollbar-thumb:hover {
   background: #555; /* Darker gray on hover */
 }
+
+
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
