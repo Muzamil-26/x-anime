@@ -6,7 +6,8 @@ import { NavLink, useParams, useSearchParams, useLocation } from "react-router-d
 import { useQuery } from "@tanstack/react-query";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import VideoPlayer2 from "@/components/ShalaPlayer2";
+// import VideoPlayer2 from "@/components/ShalaPlayer2";
+import VideoPlayer2 from "@/components/ShakaPlayer";
 import { MdShare } from "react-icons/md";
 import ShareGif from "../assets/Images/icegif-367.gif";
 import AnimeCard from "../components/AnimeCard";
@@ -105,7 +106,10 @@ const AnimeWatchPage: React.FC = () => {
                 <span className="loader1"></span>
               </div>
             ) : videoData?.videoURL ? (
-              <VideoPlayer2 key={`${epid}-${ep}-${server}-${category}`} src={videoData.videoURL} captions={videoData.tracks} />
+              <VideoPlayer2 key={`${epid}-${ep}-${server}-${category}`} src={videoData.videoURL} captions={videoData.tracks} proxyHeaders={{
+                "Referer": "https://aniwatchtv.to/",
+                "Origin": "https://aniwatchtv.to/"
+              }} />
             ) : (
               <p className="text-white">No video available</p>
             )}
@@ -113,7 +117,7 @@ const AnimeWatchPage: React.FC = () => {
 
           {/* Server Buttons */}
           <div className="mt-4 flex items-center justify-between text-sm gap-3 flex-wrap">
-            <span className="flex items-center gap-1">
+            <span className="flex flex-wrap items-center gap-1">
               SUB:{"    "}
               <NavLink to={`/watch2/${videoData?.server.episodeId}&category=sub`}>
                 <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" >
@@ -136,7 +140,7 @@ const AnimeWatchPage: React.FC = () => {
                 // </NavLink>
               ))}
             </span>
-            <span className="flex items-center gap-1">
+            <span className="flex flex-wrap items-center gap-1">
               DUB:{"    "}
               <NavLink to={`/watch2/${videoData?.server.episodeId}&category=dub`}>
                 <Button variant="outline" className="bg-black hover:bg-gray-800 hover:text-white" >

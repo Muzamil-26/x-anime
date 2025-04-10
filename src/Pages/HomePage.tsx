@@ -19,6 +19,7 @@ import '../css/Loader.css';
 
 
 
+
 export function HomePage() {
 
   const navigate = useNavigate();
@@ -167,6 +168,7 @@ export function HomePage() {
           </div>
         </div>
       )}
+
     </>
   );
 }

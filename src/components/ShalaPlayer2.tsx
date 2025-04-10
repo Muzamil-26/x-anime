@@ -32,6 +32,7 @@ const VideoPlayer2: React.FC<VideoPlayerProps> = ({ src, captions }) => {
                 preload: "auto",
                 responsive: true,
                 fluid: true,
+                playbackRates: [0.5, 1, 1.5, 2]
             });
 
             playerRef.current = player;

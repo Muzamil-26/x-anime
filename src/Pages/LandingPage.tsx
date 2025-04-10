@@ -10,6 +10,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import '../css/Loader.css';
+import DailyNotification from "@/components/AnimeupdatesNotification";
 // embla carosuel slider is downloaded use it
 
 const LandingPage = () => {
@@ -185,6 +186,7 @@ const LandingPage = () => {
         </AccordionItem>
 
       </Accordion>
+      <DailyNotification></DailyNotification>
     </>
   );
 };
